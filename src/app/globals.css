@@ -1,26 +1,91 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-ground: #0e0c0a;
+  --color-ground-soft: #171310;
+  --color-panel: #1d1812;
+  --color-gold: #c9a24b;
+  --color-gold-bright: #e8c97a;
+  --color-gold-deep: #8a6a2c;
+  --color-blue: #1e6fa8;
+  --color-paper: #f5f1e8;
+  --color-warm-gray: #a39c8a;
+
+  --font-display: var(--font-cormorant);
+  --font-body: var(--font-inter);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ground: var(--color-ground);
+  --color-ground-soft: var(--color-ground-soft);
+  --color-panel: var(--color-panel);
+  --color-gold: var(--color-gold);
+  --color-gold-bright: var(--color-gold-bright);
+  --color-gold-deep: var(--color-gold-deep);
+  --color-blue: var(--color-blue);
+  --color-paper: var(--color-paper);
+  --color-warm-gray: var(--color-warm-gray);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-ground);
+  color: var(--color-paper);
+  font-family: var(--font-body);
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-ground);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.text-gold-gradient {
+  background: linear-gradient(120deg, var(--color-gold-deep), var(--color-gold-bright) 50%, var(--color-gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.gold-rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+}
+
+/* Custom scrollbar — warm, minimal */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-ground);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-gold-deep);
+  border-radius: 999px;
 }

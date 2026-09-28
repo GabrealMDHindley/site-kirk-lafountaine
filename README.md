@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Kirk LaFountaine — Go West Realty
 
-## Getting Started
+Luxury real estate website for Kirk LaFountaine (Go West Realty, Oroville CA), built
+with Next.js App Router, React Three Fiber, and GSAP ScrollTrigger.
 
-First, run the development server:
+## Stack
+
+- Next.js 16 (App Router, TypeScript, Tailwind CSS v4)
+- React Three Fiber + drei — the animated gold-crystal hero
+- GSAP ScrollTrigger — scroll-driven reveals throughout
+- Anthropic SDK — the site's AI chatbot (`/api/chat`)
+
+## Environment variables
+
+Copy `.env.example` to `.env.local` and fill in:
+
+| Variable | Required for | Notes |
+|---|---|---|
+| `ANTHROPIC_API_KEY` | The chatbot | Without it, the chat widget tells visitors it isn't configured yet — nothing crashes. |
+| `CRM_WEBHOOK_URL` | Forwarding contact-form leads to a CRM | Point this at a Go High Level (or any) inbound webhook URL. Without it, leads are just logged server-side. |
+
+Set both as Environment Variables in the Vercel project settings for production.
+
+## Content = the chatbot's knowledge base
+
+All site copy (agent bio, listings, testimonials, FAQs) lives in `src/content/*.ts`.
+Pages import these files directly, and so does `src/lib/site-knowledge.ts`, which
+assembles them into the chatbot's system prompt on every request. **Editing a content
+file updates both the live page and the next chatbot answer — there is no separate
+sync step.** To add/update/remove a listing, edit `src/content/listings.ts` and drop
+its photos in `public/listings/<slug>/` (numbered `01.jpg`, `02.jpg`, …); the chatbot
+picks it up immediately on the next deploy.
+
+## Development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Build
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run build
+```
